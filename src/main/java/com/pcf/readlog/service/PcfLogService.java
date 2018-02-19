@@ -61,14 +61,12 @@ public class PcfLogService {
  
 	public void initApplicationNames() {
 		logger.info("-----------  : initApplicationNames() : START");
-		// cloudFoundryOperations.applications().list().map(ApplicationSummary::getName).subscribe(System.out::println);
-
+		
 		CountDownLatch latch = new CountDownLatch(1);
-		//List<String> listApplications = new ArrayList<>();
 
 		this.defaultCloudFoundryOperations.applications().list().map(ApplicationSummary::getName).subscribe(name -> {
 			logger.info("-----------  : Application Name  : " + name.toString());
-			//this.applicationDetailsList.add(name.toString());
+			
 			latch.countDown();
 		});
 
@@ -84,10 +82,8 @@ public class PcfLogService {
 	@PostConstruct  
 	public void initApplicationDetails() {
 		logger.info("-----------  : initApplicationNamesAndStatus() : START");
-		// cloudFoundryOperations.applications().list().map(ApplicationSummary::getName).subscribe(System.out::println);
-
+		
 		CountDownLatch latch = new CountDownLatch(2);
-		//List<String> listApplications = new ArrayList<>();
 		
 		this.defaultCloudFoundryOperations.applications().list().map(ApplicationSummary::getName).subscribe(name -> {
 			logger.info("-----------  : Application Name  : " + name.toString());
@@ -101,10 +97,6 @@ public class PcfLogService {
 			this.appStatusList.add(requestedState.toString());
 			latch.countDown();
 		});
-		
-		/*this.defaultCloudFoundryOperations.applications().list().map(ApplicationSummary::getRunningInstances)
-		.subscribe(System.out::println);*/
-		
 
 		try {
 			latch.await();
@@ -156,8 +148,6 @@ public class PcfLogService {
 	
 	public List<String> getApplicationNames_Lazy() {
 		logger.info("-----------  : getApplicationNames_Lazy() : START");
-		// String app = "BootHelloRest2b";*/
-		// String app = "springbootpwseclipse";
 
 		DefaultConnectionContext connectionContext = DefaultConnectionContext.builder()
 				.apiHost(appConfiguration.getTarget()).build();
@@ -174,8 +164,6 @@ public class PcfLogService {
 		DefaultCloudFoundryOperations cfOperations = DefaultCloudFoundryOperations.builder()
 				.cloudFoundryClient(cfClient).organization(appConfiguration.getOrganisation())
 				.space(appConfiguration.getSpace()).dopplerClient(reactorDopplerClient).build();
-
-		// cloudFoundryOperations.applications().list().map(ApplicationSummary::getName).subscribe(System.out::println);
 
 		CountDownLatch latch = new CountDownLatch(1);
 		List<String> listApplications = new ArrayList<>();
