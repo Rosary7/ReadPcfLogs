@@ -1,0 +1,41 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.ros.pcf.readlog'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	// Cloud Foundry
+	compile ('org.cloudfoundry:cloudfoundry-client-reactor:2.21.0.RELEASE')
+    compile ('org.cloudfoundry:cloudfoundry-operations:2.21.0.RELEASE')
+    compile ('io.projectreactor:reactor-core:3.0.7.RELEASE')
+    compile ('io.projectreactor.ipc:reactor-netty:0.6.6.RELEASE') 
+    compile 'org.cloudfoundry:cloudfoundry-client-lib:1.1.4.RELEASE'
+    
+    // MVC
+    compile ('org.springframework.boot:spring-boot-starter-tomcat') 
+    compile ('org.apache.tomcat.embed:tomcat-embed-jasper') 
+    compile ('javax.servlet:jstl') 
+}
